@@ -11,7 +11,10 @@ def sum():
 @app.route('/minus')
 def minus():
     """ Calculate X - Y """
-    x, y = int(request.args.get('x')), int(request.args.get('y'))
+    try:
+        x, y = int(request.args.get('x')), int(request.args.get('y'))
+    except ValueError as e:
+        abort(make_response(jsonify({ "message": "Only integers supported"}), 400))
     return jsonify({"result": my_math.minus(x, y) })
 
 @app.route('/mult')
